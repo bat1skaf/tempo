@@ -1,0 +1,26 @@
+using System;
+using WTelegramClient;
+
+namespace Tectex.Parse {
+    WTelegram.Client client = new WTelegram.Client(YOUR_API_ID, "YOUR_API_HASH"); // this constructor doesn't need a Config method
+    await DoLogin("+12025550156"); // initial call with user's phone_number
+
+    async Task DoLogin(string loginInfo) // (add this method to your code)
+    {
+        while (client.User == null)
+        switch (await client.Login(loginInfo)) // returns which config is needed to continue login
+        {
+             case "verification_code": Console.Write("Code: "); loginInfo = Console.ReadLine(); break;
+             case "name": loginInfo = "John Doe"; break;    // if sign-up is required (first/last_name)
+             case "password": loginInfo = "secret!"; break; // if user has enabled 2FA
+             default: loginInfo = null; break;
+        }
+        Console.WriteLine($"We are logged-in as {client.User} (id {client.User.id})");
+    }
+
+    static void ParseMusicInChan(chatname) {
+        for(message in client.iter_messages(chatname, filter=InputMessagesFilterMusic())) {
+            Console.WriteLine(message.file.name)
+        }
+    }
+}
