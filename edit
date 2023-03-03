@@ -1,0 +1,3 @@
+from telethon.tl.types import InputMessagesFilterMusic
+async for message in client.iter_messages(msg.chat, filter=InputMessagesFilterMusic()):
+    print(message.file.name)
